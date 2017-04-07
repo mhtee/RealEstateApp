@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/themeGreen"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/AddressTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@android:color/white"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/BedroomView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AddressTextView"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/BathroomView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AddressTextView"
+        android:layout_toRightOf="@+id/BedroomView"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/DistanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:layout_below="@+id/BedroomView"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/PriceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/BathroomView"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="24dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/question_title_view"
+        android:background="@color/themeListSeperator" />
+
+</RelativeLayout>
