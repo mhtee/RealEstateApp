@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.teamoutis.realestateapp.Models.Property;
 import com.teamoutis.realestateapp.R;
@@ -38,13 +39,21 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final Property property = properties.get(position);
-        PViewHolder holder = (PViewHolder) viewHolder;
+        final PViewHolder holder = (PViewHolder) viewHolder;
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         holder.address.setText(property.getAddress());
         holder.bedroom.setText("Bedrooms: " + String.valueOf(property.getBedroom()));
         holder.bathroom.setText("Bathrooms: " + String.valueOf(property.getBathroom()));
         holder.distance.setText("Distance to Work: " + String.valueOf(property.getDistance()));
         holder.price.setText(numberFormat.format(property.getPrice()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(holder.itemView.getContext(), "You're trying to select a Property",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
