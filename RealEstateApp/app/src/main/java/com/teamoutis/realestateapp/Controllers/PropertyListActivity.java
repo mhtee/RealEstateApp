@@ -37,6 +37,8 @@ public class PropertyListActivity extends AppCompatActivity {
     ArrayList<Property> properties;
     Intent receiver;
     String json;
+    double priceMin = 0;
+    double priceMax = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,8 @@ public class PropertyListActivity extends AppCompatActivity {
 
         receiver = getIntent();
         json = receiver.getStringExtra("jsonObject");
+        priceMin = receiver.getDoubleExtra("priceMin", 0);
+        priceMax = receiver.getDoubleExtra("priceMax", 0);
         properties = new ArrayList<>();
 
         try {
@@ -56,17 +60,34 @@ public class PropertyListActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++){
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                String priceString = jsonObject.getString("price");
+
+                priceString = priceString.replaceAll("[^\\d.]", "");
+                double price;
+                if (!priceString.isEmpty() && priceString != null){
+                    price = Double.parseDouble(priceString);
+                }
+                else {
+                    price = -1;
+                }
+
+                if (priceMin != 0 && price < priceMin){
+                    continue;
+                } else if(priceMax != 0 && price > priceMax){
+                    continue;
+                }
+
+
                 String address = jsonObject.getString("address");
                 String zipString = jsonObject.getString("Zip_Code");
                 String bedString = jsonObject.getString("bedroom");
                 String bathString = jsonObject.getString("bathroom");
-                String priceString = jsonObject.getString("price");
                 String link = jsonObject.getString("link");
 
                 zipString = zipString.replaceAll("[^\\d.]", "");
                 bedString = bedString.replaceAll("[^\\d.]", "");
                 bathString = bathString.replaceAll("[^\\d.]", "");
-                priceString = priceString.replaceAll("[^\\d.]", "");
                 address = address.replaceAll("\\[\"(.*?)\"\\]", "$1");
                 link = link.replaceAll("\\[\"(.*?)\"\\]", "$1");
                 link = link.replaceAll("\\\\/", "/");
@@ -90,14 +111,7 @@ public class PropertyListActivity extends AppCompatActivity {
                     bathroom = -1;
                 }
 
-                double price;
-                Log.d("PRICE: ", priceString);
-                if (!priceString.isEmpty() && priceString != null){
-                    price = Double.parseDouble(priceString);
-                }
-                else {
-                    price = -1;
-                }
+
 
 
                 properties.add(new Property(address, bedroom, bathroom, zipCode, price, link));

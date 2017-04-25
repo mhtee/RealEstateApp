@@ -28,11 +28,13 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText CityBox, ZipBox, BedroomBox, BathroomBox;
+    EditText CityBox, ZipBox, BedroomBox, BathroomBox, PriceMinBox, PriceMaxBox;
     String city = "";
     int zipCode = -1;
     int bedroom = -1;
     int bathroom = -1;
+    double priceMin = 0;
+    double priceMax = 0;
 
     public void searchFunction (View view) {
 
@@ -75,8 +77,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Wrong format: bathroom", Toast.LENGTH_SHORT).show();
             return;
         }
+        PriceMinBox = (EditText) findViewById(R.id.priceMinBox);
+        temp = PriceMinBox.getText().toString();
+        if (!temp.isEmpty() && temp != null){
+            priceMin = Double.parseDouble(temp);
+        }
+        PriceMaxBox = (EditText) findViewById(R.id.priceMaxBox);
+        temp = PriceMaxBox.getText().toString();
+        if (!temp.isEmpty() && temp != null){
+            priceMax = Double.parseDouble(temp);
+        }
 
-        city.replaceAll(" ", "%20");
+        city = city.replaceAll(" ", "%20");
 
 
         Toast.makeText(getBaseContext(), "Retrieving...", Toast.LENGTH_LONG).show();
@@ -161,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Intent intent = new Intent(getBaseContext(), PropertyListActivity.class);
                 intent.putExtra("jsonObject", output);
+                intent.putExtra("priceMin", priceMin);
+                intent.putExtra("priceMax", priceMax);
                 startActivity(intent);
             }
 
