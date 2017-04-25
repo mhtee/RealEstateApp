@@ -1,19 +1,15 @@
 package com.teamoutis.realestateapp.Controllers;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.teamoutis.realestateapp.Adapters.PropertyAdapter;
 import com.teamoutis.realestateapp.Models.Property;
@@ -23,12 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class PropertyListActivity extends AppCompatActivity {
@@ -41,6 +31,8 @@ public class PropertyListActivity extends AppCompatActivity {
     double priceMax = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Setting up activity and toolbar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -49,12 +41,14 @@ public class PropertyListActivity extends AppCompatActivity {
         toolbarText.setText("Properties");
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
+        // Receiving data from previous activity
         receiver = getIntent();
         json = receiver.getStringExtra("jsonObject");
         priceMin = receiver.getDoubleExtra("priceMin", 0);
         priceMax = receiver.getDoubleExtra("priceMax", 0);
         properties = new ArrayList<>();
 
+        // Converting JSON array into an arraylist of properties
         try {
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++){
@@ -124,21 +118,14 @@ public class PropertyListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*
-        properties.add(new Property("123 Main St, Houston, TX, 77002", 2, 2, 77002, 200000));
-        properties.add(new Property("1122 Bellaire St, Houston, TX, 77074", 2, 1, 77074, 250000));
-        properties.add(new Property("9972 Beechnut St, Houston, TX, 77036", 3, 3, 77036, 300000));
-        properties.add(new Property("123 Fannin St, Houston, TX, 77002", 5, 4, 77002, 450000));
-        properties.add(new Property("1159 Kirby St, Houston, TX, 77099", 6, 5, 77099, 500000));
-        properties.add(new Property("123 Williams Trace St, Houston, TX, 77498", 5, 4, 77498, 750000));
-        properties.add(new Property("1235 Kirby St, Houston, TX, 77099", 6, 5, 77099, 500000));
-        */
 
+        // Property Adapter
         propertyAdapter = new PropertyAdapter(properties);
 
         final RecyclerView propertyRecyclerView =
                 (RecyclerView) findViewById(R.id.propertyRecyclerView);
 
+        // Attaching adapter to recycler view
         RecyclerView.LayoutManager llm = new LinearLayoutManager(getBaseContext());
         propertyRecyclerView.setLayoutManager(llm);
         propertyRecyclerView.setAdapter(propertyAdapter);

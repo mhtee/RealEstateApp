@@ -16,14 +16,11 @@ import android.widget.Toast;
 
 import com.teamoutis.realestateapp.R;
 
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.net.HttpURLConnection;
-import java.net.Socket;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchFunction (View view) {
 
+        // Getting data from text box and formatting it
         CityBox = (EditText) findViewById(R.id.CityBox);
         city = CityBox.getText().toString().toLowerCase();
         ZipBox = (EditText) findViewById(R.id.ZipBox);
@@ -91,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         city = city.replaceAll(" ", "%20");
 
 
+        // Creating link with the data from text boxes
         Toast.makeText(getBaseContext(), "Retrieving...", Toast.LENGTH_LONG).show();
         GetData data = new GetData();
         data.execute("http://34.208.154.237/request/" + city + "/" + Integer.toString(zipCode) +
@@ -114,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Setting up activity and toolbar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -122,14 +123,11 @@ public class MainActivity extends AppCompatActivity {
         toolbarText.setText("Search");
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        TextView searchTextView = (TextView) findViewById(R.id.CityTextView);
-        EditText searchBox = (EditText) findViewById(R.id.CityBox);
-        Log.d("Debug", searchBox.getText().toString());
 
-        //Button button = (Button) findViewById(R.id.button);
     }
 
 
+    // Getting data from solr
     public class GetData extends AsyncTask<String, Void, String> {
 
         @Override
@@ -141,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             HttpURLConnection httpURL = null;
 
 
+            // Connecting to python server and getting data
             try {
                 url = new URL(urls[0]);
                 httpURL = (HttpURLConnection) url.openConnection();
@@ -167,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String output){
             super.onPostExecute(output);
 
+            // Start next activity on successful connection
             if (output.equals("Connection Failed!")){
                 Toast.makeText(getBaseContext(), output, Toast.LENGTH_SHORT).show();
             }
