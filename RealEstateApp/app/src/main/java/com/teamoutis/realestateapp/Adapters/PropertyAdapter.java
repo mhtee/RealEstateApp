@@ -1,6 +1,9 @@
 package com.teamoutis.realestateapp.Adapters;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +47,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.address.setText(property.getAddress());
         holder.bedroom.setText("Bedrooms: " + String.valueOf(property.getBedroom()));
         holder.bathroom.setText("Bathrooms: " + String.valueOf(property.getBathroom()));
-        holder.distance.setText("Distance to Work: " + String.valueOf(property.getDistance()));
+        holder.zipcode.setText("Zip Code: " + String.valueOf(property.getZipCode()));
         holder.price.setText(numberFormat.format(property.getPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +55,11 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             public void onClick(View v) {
                 Toast.makeText(holder.itemView.getContext(), "You're trying to select a Property",
                         Toast.LENGTH_LONG).show();
+
+                String link = "https://trulia.com" + property.getLink();
+                Log.d("LINK: ", link);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                holder.itemView.getContext().startActivity(browserIntent);
             }
         });
     }
@@ -67,14 +75,15 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView bathroom;
         public TextView distance;
         public TextView price;
+        public TextView zipcode;
 
         public PViewHolder(View itemView) {
             super(itemView);
             address = (TextView) itemView.findViewById(R.id.AddressTextView);
             bedroom = (TextView) itemView.findViewById(R.id.BedroomView);
             bathroom = (TextView) itemView.findViewById(R.id.BathroomView);
-            distance = (TextView) itemView.findViewById(R.id.DistanceView);
             price = (TextView) itemView.findViewById(R.id.PriceView);
+            zipcode= (TextView) itemView.findViewById(R.id.ZipCodeView);
         }
     }
 }

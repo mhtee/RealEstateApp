@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teamoutis.realestateapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".Controllers.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.PropertyListActivity"></activity>
+        <activity
+            android:name=".Controllers.PropertyListActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

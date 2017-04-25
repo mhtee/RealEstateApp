@@ -9,15 +9,18 @@ public class Property {
     private String address;
     private int bedroom;
     private int bathroom;
-    private double distance;
+    private int zipcode;
     private double price;
+    private String link;
 
-    public Property(String address, int bedroom, int bathroom, double distance, double price){
+    public Property(String address, int bedroom, int bathroom, int zipcode,
+                    double price, String link){
         this.address = address;
         this.bedroom = bedroom;
         this.bathroom = bathroom;
-        this.distance = distance;
+        this.zipcode = zipcode;
         this.price = price;
+        this.link = link;
     }
 
     public void setAddress(String addr) {
@@ -32,8 +35,8 @@ public class Property {
         this.bathroom = bathroom;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setZipCode(int zipcode) {
+        this.zipcode = zipcode;
     }
 
     public void setPrice(double price) {
@@ -52,11 +55,13 @@ public class Property {
         return bathroom;
     }
 
-    public double getDistance() {
-        return distance;
+    public int getZipCode() {
+        return zipcode;
     }
 
     public double getPrice() {
         return price;
     }
+
+    public String getLink() { return link; }
 }
